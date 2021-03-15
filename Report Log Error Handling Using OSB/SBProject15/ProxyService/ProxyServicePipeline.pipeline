@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="SBProject15/ProxyService/cust"/>
+            <con:binding>
+                <con:name>execute_bind</con:name>
+                <con:namespace>http://xmlns.oracle.com/ServiceBusApplication/SBProject15/cust</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cfc">
+            <con:stage id="_StageId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7c54" name="report">
+                <con:context>
+                    <con1:userNsDecl prefix="exam" namespace="http://www.example.org" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7c1f</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>First Name</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">./exam:request/exam:empName</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cfa" name="logging ">
+                <con:context/>
+                <con:actions>
+                    <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7c89</con2:id>
+                        <con1:logLevel>warning</con1:logLevel>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                        </con1:expr>
+                        <con1:message>This is the logger - Request Received</con1:message>
+                    </con1:log>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cfb">
+            <con:stage id="_StageId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7c22" name="report">
+                <con:context>
+                    <con1:userNsDecl prefix="exam" namespace="http://www.example.org" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:report xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7c1c</con2:id>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                        </con1:expr>
+                        <con1:labels>
+                            <con1:key>First Name</con1:key>
+                            <con1:varName>body</con1:varName>
+                            <con1:value>
+                                <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                            </con1:value>
+                        </con1:labels>
+                    </con1:report>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cbd" name="logging">
+                <con:context/>
+                <con:actions>
+                    <con1:log xmlns:con1="http://www.bea.com/wli/sb/stages/logging/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7c86</con2:id>
+                        <con1:logLevel>warning</con1:logLevel>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">$body</con2:xqueryText>
+                        </con1:expr>
+                        <con1:message>This is the logger - Response Received</con1:message>
+                    </con1:log>
+                </con:actions>
+            </con:stage>
+            <con:stage id="_StageId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cf9" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="exam" namespace="http://www.example.org" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cf2</con2:id>
+                        <con1:location>
+                            <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">concat('Cust Id:',$body/exam:request/exam:empId,'LOAN APPROVED')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cf8">
+            <con:stage id="_StageId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cf6" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cf7">
+            <con:stage id="_StageId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cf5" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="exam" namespace="http://www.example.org" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cef</con2:id>
+                        <con1:location>
+                            <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">concat("CUSTID:",$body/exam:request/exam:empId,'LOAN REJECTED')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:branch-node type="condition" id="_FlowId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d2e" name="conditional branch">
+                <con:context>
+                    <con1:userNsDecl prefix="exam" namespace="http://www.example.org" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:branch-table variable="body">
+                    <con:xpath>
+                        <con1:xpathText xmlns:con1="http://www.bea.com/wli/sb/stages/config">./exam:request/exam:empSal</con1:xpathText>
+                    </con:xpath>
+                    <con:branch name="loan approved">
+                        <con:operator>greater than</con:operator>
+                        <con:value>20000</con:value>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node1">
+                                <con:request>request-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cfc</con:request>
+                                <con:response>response-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cfb</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="loan rejected">
+                        <con:operator>less than</con:operator>
+                        <con:value>20000</con:value>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node2">
+                                <con:request>request-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cf8</con:request>
+                                <con:response>response-N3f57fefb.7f1db0b2.0.17825ce7a74.N7cf7</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

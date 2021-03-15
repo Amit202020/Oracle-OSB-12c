@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <con:coreEntry>
+        <con:binding type="SOAP" isSoap12="false" xsi:type="con:SoapBindingType">
+            <con:wsdl ref="SBProject14/ProxyService/order"/>
+            <con:binding>
+                <con:name>execute_bind</con:name>
+                <con:namespace>http://xmlns.oracle.com/ServiceBusApplication/SBProject14/order</con:namespace>
+            </con:binding>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d3c">
+            <con:stage id="_StageId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d3a" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d3b">
+            <con:stage id="_StageId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d39" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="exam" namespace="http://www.example.org" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d36</con2:id>
+                        <con1:location>
+                            <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">concat('orderId :',$body/exam:request/exam:orderId,'approved')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="request" name="request-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d35">
+            <con:stage id="_StageId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d33" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d34">
+            <con:stage id="_StageId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d32" name="Stage1">
+                <con:context>
+                    <con1:userNsDecl prefix="exam" namespace="http://www.example.org" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:actions>
+                    <con1:replace varName="body" contents-only="true" xmlns:con1="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con2:id xmlns:con2="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d2f</con2:id>
+                        <con1:location>
+                            <con2:xpathText xmlns:con2="http://www.bea.com/wli/sb/stages/config">.</con2:xpathText>
+                        </con1:location>
+                        <con1:expr>
+                            <con2:xqueryText xmlns:con2="http://www.bea.com/wli/sb/stages/config">concat('Order Id',$body/exam:request/exam:orderId,'REJECTED')</con2:xqueryText>
+                        </con1:expr>
+                    </con1:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:branch-node type="condition" id="_FlowId-N3f57fefb.7f1db0b2.0.17825ce7a74.N7e32" name="Conditional Branch">
+                <con:context>
+                    <con1:userNsDecl prefix="exam" namespace="http://www.example.org" xmlns:con1="http://www.bea.com/wli/sb/stages/config"/>
+                </con:context>
+                <con:branch-table variable="body">
+                    <con:xpath>
+                        <con1:xpathText xmlns:con1="http://www.bea.com/wli/sb/stages/config">./exam:request/exam:orderAmount</con1:xpathText>
+                    </con:xpath>
+                    <con:branch name="less than 1 lakh">
+                        <con:operator>less than equal to</con:operator>
+                        <con:value>100000</con:value>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node1">
+                                <con:request>request-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d3c</con:request>
+                                <con:response>response-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d3b</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:branch name="greater than 100000">
+                        <con:operator>greater than</con:operator>
+                        <con:value>100000</con:value>
+                        <con:flow>
+                            <con:pipeline-node name="Pipeline Pair Node2">
+                                <con:request>request-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d35</con:request>
+                                <con:response>response-N3f57fefb.7f1db0b2.0.17825ce7a74.N7d34</con:response>
+                            </con:pipeline-node>
+                        </con:flow>
+                    </con:branch>
+                    <con:default-branch>
+                        <con:flow/>
+                    </con:default-branch>
+                </con:branch-table>
+            </con:branch-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>

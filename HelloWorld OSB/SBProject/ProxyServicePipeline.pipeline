@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:pipelineEntry xmlns:con="http://www.bea.com/wli/sb/pipeline/config" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:con1="http://www.bea.com/wli/sb/typesystem/config">
+    <con:coreEntry>
+        <con:binding type="Mixed" xsi:type="con:MixedBindingType">
+            <con:request type="XML">
+                <con1:schema ref="SBProject/demo" element="request"/>
+            </con:request>
+            <con:response type="XML">
+                <con1:schema ref="SBProject/demo" element="response"/>
+            </con:response>
+        </con:binding>
+        <con:xqConfiguration>
+            <con:snippetVersion>1.0</con:snippetVersion>
+        </con:xqConfiguration>
+    </con:coreEntry>
+    <con:router>
+        <con:pipeline type="request" name="request-N3f57fefb.10967662.0.1781c6829f1.N7fff">
+            <con:stage id="_StageId-N3f57fefb.10967662.0.1781c6829f1.N7ffd" name="Stage1">
+                <con:context/>
+                <con:actions/>
+            </con:stage>
+        </con:pipeline>
+        <con:pipeline type="response" name="response-N3f57fefb.10967662.0.1781c6829f1.N7ffe">
+            <con:stage id="_StageId-N3f57fefb.10967662.0.1781c6829f1.N7ffc" name="Stage1">
+                <con:context/>
+                <con:actions>
+                    <con2:replace varName="body" contents-only="true" xmlns:con2="http://www.bea.com/wli/sb/stages/transform/config">
+                        <con3:id xmlns:con3="http://www.bea.com/wli/sb/stages/config">_ActionId-N3f57fefb.10967662.0.1781c6829f1.N7fc8</con3:id>
+                        <con2:location>
+                            <con3:xpathText xmlns:con3="http://www.bea.com/wli/sb/stages/config">.</con3:xpathText>
+                        </con2:location>
+                        <con2:expr>
+                            <con3:xqueryText xmlns:con3="http://www.bea.com/wli/sb/stages/config">concat('Welcome ',$body, "This is 12c OSB !!!")</con3:xqueryText>
+                        </con2:expr>
+                    </con2:replace>
+                </con:actions>
+            </con:stage>
+        </con:pipeline>
+        <con:flow>
+            <con:pipeline-node name="Pipeline Pair Node1">
+                <con:request>request-N3f57fefb.10967662.0.1781c6829f1.N7fff</con:request>
+                <con:response>response-N3f57fefb.10967662.0.1781c6829f1.N7ffe</con:response>
+            </con:pipeline-node>
+        </con:flow>
+    </con:router>
+</con:pipelineEntry>
